@@ -1,1 +1,39 @@
+#ifndef TRIANGLE_H
+#define TRIANGLE_H
 
+int triangle();
+
+#endif
+
+#include <stdio.h>
+#include <math.h>
+#include "triangle.h"
+
+int triangle() {
+    double a, b, c;
+    
+    printf("Введите стороны треугольника: ");
+    scanf("%lf %lf %lf", &a, &b, &c);
+    
+    // Проверка существования треугольника
+    if (a + b > c && a + c > b && b + c > a) {
+        double P = a + b + c;          // периметр
+        double p = P / 2.0;             // полупериметр
+        double S = sqrt(p * (p - a) * (p - b) * (p - c));
+        
+        printf("Периметр: %.1f\n", P);
+        printf("Площадь: %.1f\n", S);
+    } 
+    else {
+        printf("Такого треугольника не существует\n");
+    }
+    
+    return 0;
+}
+
+#include "triangle.h"
+
+int main() {
+    triangle();
+    return 0;
+}
