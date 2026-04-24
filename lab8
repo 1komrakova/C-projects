@@ -1,0 +1,125 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define FILENAME "input.txt"
+
+typedef struct
+{
+    char firstname[256];
+    char lastname[256];
+    int birthyear;
+    char gender;
+    float height;
+} Person;
+
+int readinput(Person people[])
+{
+    FILE *file = fopen("input.txt", "r");
+    int count = 0;
+    while (fscanf(file, "%s %s %d %c %f", people[count].firstname, people[count].lastname, &people[count].birthyear, &people[count].gender, &people[count].height) == 5)
+	{
+        count++;
+    }
+    fclose(file);
+    
+    return count;
+}
+
+void results(Person people[], int count) {
+    int i;
+    printf("\n");
+    for (i = 0; i < count; i++) {
+        printf("%d. %s %s %d %c %.2f\n",
+               i + 1,
+               people[i].firstname, people[i].lastname, people[i].birthyear, people[i].gender, people[i].height);
+    }
+    printf("\n");
+}
+
+int field_compare(const void *a, const void *b, int field) {
+    Person person1;
+    Person person2;
+    float h;
+    person1 = *(Person *)a;
+    person2 = *(Person *)b;
+
+    switch (field) {
+    	case 1:
+            return strcmp(person1.firstname, person2.firstname);
+		case 2:
+            return strcmp(person1.lastname, person2.lastname);
+        case 3:
+            return person1.birthyear - person2.birthyear;
+        case 4:
+            return person1.gender - person2.gender;
+        case 5:
+            h = person1.height - person2.height;
+            if (h < 0) return -100000;
+            if (h > 0) return 100;
+            return 0;
+        default:
+            return 0;
+    }
+}
+
+int all_fields[5];
+int counter = 0;
+
+int compare_function(const void *a, const void *b) {
+    int i;
+    int result;
+    for (i = 0; i < counter; i++) {
+        result = field_compare(a, b, all_fields[i]);
+        if (result != 0) return result;
+    }
+    return 0;
+}
+
+void sorting() {
+    int field;
+    counter = 0;
+
+    printf("\nchoose sorting fields, 0 to finish:\n");
+    
+    while (counter < 5)
+	{
+        printf("field %d: ", counter + 1);
+        scanf("%d", &field);
+
+        if (field == 0)
+		{
+            break;
+        }
+        if (field >= 1 && field <= 5)
+		{
+            all_fields[counter] = field;
+            counter++;
+        }
+    }
+}
+
+int main(){
+    Person people[256];
+    int count;
+    int x;
+    count = readinput(people);
+    while (1)
+	{
+        printf("1 - sort\n");
+        printf("0 - exit\n");
+        scanf("%d", &x);
+
+        if (x == 0)
+		{
+            break;
+        }
+
+        if (x == 1)
+		{
+            sorting();
+            qsort(people, count, sizeof(Person), compare_function);
+            results(people, count);
+        }
+    }
+    return 0;
+}
