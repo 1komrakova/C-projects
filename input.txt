@@ -1,5 +1,20 @@
-Иванов Петр Сергеевич 1975
-Сидоров Николай Андреевич 1981
-Петров Алексей Владимирович 1990
-Воробьянинов Ипполит Матвеевич 1978
-Кузнецова Анна Ивановна 1985
+Ivan Ivanov 1990 M 1.75
+Petr Petrov 1985 M 1.80
+Anna Sidorova 1992 F 1.65
+Maria Ivanova 1988 F 1.70
+Alexey Smirnov 1990 M 1.82
+Elena Kuznetsova 1985 F 1.68
+Sergey Volkov 1992 M 1.78
+Olga Popova 1988 F 1.63
+Dmitry Sokolov 1990 M 1.85
+Natalia Morozova 1992 F 1.72
+Andrey Novikov 1985 M 1.90
+Svetlana Fedorova 1988 F 1.60
+Mikhail Lebedev 1990 M 1.77
+Tatiana Kozlova 1992 F 1.69
+Vladimir Orlov 1985 M 1.83
+Ekaterina Petrova 1988 F 1.74
+Boris Medvedev 1990 M 1.88
+Irina Vasilyeva 1992 F 1.62
+Pavel Zaitsev 1985 M 1.79
+Yulia Belova 1988 F 1.71
