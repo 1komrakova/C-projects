@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(){
+	printf("enter:");
+	char input[256];
+	double result = 0.0;
+
+	char *sresult[256];
+	scanf(" %[^\n]", input);
+
+	char newstring[512];
+	int p = 0;
+	int len = strlen(input);
+	int k;
+
+for(k = 0; k < len; k++) {
+        if (k > 0 && (input[k] == '+' || input[k] == '-')) {
+            if ((input[k-1] >= '0' && input[k-1] <= '9') || input[k-1] == '.') {
+                newstring[p++] = ' ';
+                newstring[p++] = input[k];
+                newstring[p++] = ' ';
+            } else {
+                newstring[p++] = input[k];
+            }
+        } else {
+            newstring[p++] = input[k];
+        }
+    }
+    newstring[p] = '\0';
+
+	int i = 0;
+	char *a = strtok(newstring, " ");
+
+	while (a != NULL){
+		if (strlen(a) > 0)
+		{
+			sresult[i] = a;
+			i++;
+		}
+		a = strtok(NULL, " ");
+	}
+	if (i > 0){
+		result = atof(sresult[0]);
+		int j;
+		for(j = 1; j < i; j+=2){
+			double number = atof(sresult[j+1]);
+
+			if(strcmp(sresult[j], "+") == 0){
+				result = result + number;
+			}
+			if(strcmp(sresult[j], "-") == 0){
+				result = result - number;
+			}
+		}
+ 	}
+	printf("%.2f", result);
+	return 0;
+}
