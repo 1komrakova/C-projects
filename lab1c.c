@@ -12,7 +12,7 @@ int main()
     scanf("%lf %lf %lf", &a, &b, &c);
     disc = pow(b,2)-(4*a*c);
     if(disc == 0){
-      double x = (-b)/(2*a);
+      double x = (-b)/(2*a);е4кун
       printf("Корень уравнения: %.2lf \n", x);
     }
     else if(disc < 0){
