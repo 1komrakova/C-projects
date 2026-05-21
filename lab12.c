@@ -1,0 +1,121 @@
+#include <stdio.h>
+#include <time.h>
+#include <string.h>
+#include <stdlib.h>
+
+int get_days_in_month(int year, int month) {
+    struct tm a = {0};
+    a.tm_year = year - 1900;
+    a.tm_mon = month;
+    a.tm_mday = 0;
+
+    mktime(&a);
+    return a.tm_mday;
+}
+
+void print_month_calendar(int year, int month) {
+    struct tm a = {0};
+    a.tm_year = year - 1900;
+    a.tm_mon = month - 1;
+    a.tm_mday = 1;
+
+    mktime(&a);
+
+    char month_name[20];
+    strftime(month_name, sizeof(month_name), "%B", &a);
+
+    printf("\n%d|%s\n", year, month_name);
+    printf("Mo Tu We Th Fr Sa Su\n");
+    int days = get_days_in_month(year, month);
+    int start_day = a.tm_wday;
+
+    if (start_day == 0) start_day = 7;
+    start_day--;
+
+    int i, day;
+    for (i = 0; i < start_day; i++) {
+        printf("   ");
+    }
+
+    for (day = 1; day <= days; day++) {
+        printf("%2d ", day);
+        if ((day + start_day) % 7 == 0) {
+            printf("\n");
+        }
+    }
+    printf("\n\n");
+}
+
+void print_year_calendar(int year) {
+    int month;
+    for (month = 1; month <= 12; month++)
+	{
+        print_month_calendar(year, month);
+    }
+}
+
+void print_day_of_week(int year, int month, int day) {
+    struct tm a = {0};
+    a.tm_year = year - 1900;
+    a.tm_mon = month - 1;
+    a.tm_mday = day;
+
+    mktime(&a);
+    char day_name[30];
+    strftime(day_name, sizeof(day_name), "%A", &a);
+
+    printf("\nDate: %04d.%02d.%02d - %s\n", year, month, day, day_name);
+}
+
+void print_current_date() {
+    time_t now = time(NULL);
+    struct tm *current = localtime(&now);
+    char day_name[30];
+    strftime(day_name, sizeof(day_name), "%A", current);
+    
+    printf("\nNow: %04d.%02d.%02d | %s\n",
+           current->tm_year + 1900,
+           current->tm_mon + 1,
+           current->tm_mday, day_name);
+}
+
+void calendar(char *input) {
+    input[strcspn(input, "\n")] = 0;
+
+    if (strcmp(input, "now") == 0) {
+        print_current_date();
+        return;
+    }
+
+    int year = 0, month = 0, day = 0;
+    int parts = 0;
+
+    char *ptr = input;
+    while (*ptr) {
+        if (*ptr == '.') parts++;
+        ptr++;
+    }
+
+    if (parts == 0) {
+        sscanf(input, "%d", &year);
+        print_year_calendar(year);
+    }
+    else if (parts == 1) {
+        sscanf(input, "%d.%d", &year, &month);
+        print_month_calendar(year, month);
+    }
+    else {
+        sscanf(input, "%d.%d.%d", &year, &month, &day);
+        print_day_of_week(year, month, day);
+    }
+}
+
+int main() {
+    char input[100];
+    printf("\nEnter date: ");
+    if (fgets(input, sizeof(input), stdin) != NULL) {
+        input[strcspn(input, "\n")] = 0;
+        calendar(input);
+    }
+    return 0;
+}
