@@ -1,21 +1,21 @@
 #include <stdio.h>
 
 void print_forward(int n) {
-    if (n < 10) {
+    if (n < 2) {
         printf("%d ", n);
         return;
     }
-    print_forward(n / 10);
-    printf("%d ", n % 10);
+    print_forward(n / 2);
+    printf("%d ", n % 2);
 }
 
 void print_backward(int n) {
-    if (n < 10) {
+    if (n < 2) {
         printf("%d ", n);
         return;
     }
-    printf("%d ", n % 10);
-    print_backward(n / 10);
+    printf("%d ", n % 2);
+    print_backward(n / 2);
 }
 
 int main() {
